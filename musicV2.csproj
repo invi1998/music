@@ -100,6 +100,12 @@
       <DependentUpon>MusicalTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="MusicFile.cs" />
+    <Compile Include="MyPanel01.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyPanel01.Designer.cs">
+      <DependentUpon>MyPanel01.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayListForm1.cs">
       <SubType>Form</SubType>
     </Compile>

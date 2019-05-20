@@ -26,6 +26,8 @@ namespace musicV2
 
             InitializeComponent();
 
+            PlayListPanel.Hide();
+
             fugaiui.Image = null;
             listItem2.Add(new gedanItemTemplate() { Text = "浏览音乐", Tag = null });
             listItem.Add(new listitemTemplate() { Tag = @"../pic/zhuye0", Text = "发现音乐" });
@@ -383,21 +385,58 @@ namespace musicV2
         }
 
         private bool show_TG = false;
-        PlayListForm1 playList01 = new PlayListForm1();
 
         private void dSkinPictureBox6_Click(object sender, EventArgs e)
         {
-            
-            if (show_TG == false)
+
+            if (PlayListPanel_TG == false)
             {
-                playList01.Show();
-                show_TG = true;
+                PlayListPanel.Show();
+                PlayListPanel_TG = true;
                 return;
             }
-            if(show_TG==true)
+            if (PlayListPanel_TG == true)
             {
-                playList01.Hide();
-                show_TG = false;
+                PlayListPanel.Hide();
+                PlayListPanel_TG = false;
+                return;
+            }
+        }
+        public bool PlayListPanel_TG = false;
+        private void dSkinListBox1_ItemClick(object sender, DSkin.Controls.ItemClickEventArgs e)
+        {
+          
+        }
+        List<ListMusicMenuTemplate> list01 = new List<ListMusicMenuTemplate>();
+        private void PlayListPanel_Layout(object sender, LayoutEventArgs e)
+        {
+            PlayListPanel.Location = new Point(1420, 30);
+            list01.Add(new ListMusicMenuTemplate() { Text = "让酒&电视剧《沙海》插曲&摩登兄弟&04:26" });
+            list01.Add(new ListMusicMenuTemplate() { Text = "左手指月&电视剧《香蜜沉沉烬如霜》片尾曲&萨顶顶&03:50" });
+            list01.Add(new ListMusicMenuTemplate() { Text = "Fly Away&&Anjulie / TheFatRa&03:14" });
+            list01.Add(new ListMusicMenuTemplate() { Text = "我曾经也想过一了百了&电影《北京遇上西雅图之不二情书》主题曲&汤唯&05:31" });
+
+            dSkinListBox4.Items.Add(list01[0]);
+            dSkinListBox4.Items.Add(list01[1]);
+            dSkinListBox4.Items.Add(list01[2]);
+            dSkinListBox4.Items.Add(list01[3]);
+        }
+
+        private void dSkinListBox4_ItemClick(object sender, DSkin.Controls.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void dSkinListBox4_ItemSelectedChanged(object sender, DSkin.DirectUI.DuiControlEventArgs e)
+        {
+            for (int i = 0; i < this.list01.Count(); i += 1)
+            {
+                if (list01[i].IsSelected == true)
+                {
+                    //listItem4[i].Selection = true;
+                }
+                else
+                    list01[i].Selection = false;
             }
         }
     }

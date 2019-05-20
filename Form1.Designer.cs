@@ -55,12 +55,19 @@
             this.dSkinPictureBox5 = new DSkin.Controls.DSkinPictureBox();
             this.dSkinTextBox1 = new DSkin.Controls.DSkinTextBox();
             this.dSkinPictureBox4 = new DSkin.Controls.DSkinPictureBox();
+            this.PlayListPanel = new DSkin.Controls.DSkinPanel();
+            this.dSkinLabel11 = new DSkin.Controls.DSkinLabel();
+            this.dSkinListBox4 = new DSkin.Controls.DSkinListBox();
+            this.dSkinLabel10 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel9 = new DSkin.Controls.DSkinLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox1)).BeginInit();
             this.belowPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox2)).BeginInit();
             this.dSkinPanel1.SuspendLayout();
+            this.PlayListPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // dSkinListBox1
@@ -77,6 +84,7 @@
             this.dSkinListBox1.Text = "dSkinListBox1";
             this.dSkinListBox1.Value = 0D;
             this.dSkinListBox1.ItemSelectedChanged += new System.EventHandler<DSkin.DirectUI.DuiControlEventArgs>(this.dSkinListBox1_ItemSelectedChanged);
+            this.dSkinListBox1.ItemClick += new System.EventHandler<DSkin.Controls.ItemClickEventArgs>(this.dSkinListBox1_ItemClick);
             // 
             // belowPanel
             // 
@@ -467,6 +475,66 @@
             this.dSkinPictureBox4.TabIndex = 0;
             this.dSkinPictureBox4.Text = "dSkinPictureBox4";
             // 
+            // PlayListPanel
+            // 
+            this.PlayListPanel.BackColor = System.Drawing.Color.Transparent;
+            this.PlayListPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PlayListPanel.BackgroundImage")));
+            this.PlayListPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.PlayListPanel.Controls.Add(this.dSkinLabel11);
+            this.PlayListPanel.Controls.Add(this.dSkinListBox4);
+            this.PlayListPanel.Controls.Add(this.dSkinLabel10);
+            this.PlayListPanel.Controls.Add(this.dSkinLabel9);
+            this.PlayListPanel.Location = new System.Drawing.Point(1420, 30);
+            this.PlayListPanel.Name = "PlayListPanel";
+            this.PlayListPanel.RightBottom = ((System.Drawing.Image)(resources.GetObject("PlayListPanel.RightBottom")));
+            this.PlayListPanel.Size = new System.Drawing.Size(500, 930);
+            this.PlayListPanel.TabIndex = 4;
+            this.PlayListPanel.Text = "dSkinPanel2";
+            this.PlayListPanel.Layout += new System.Windows.Forms.LayoutEventHandler(this.PlayListPanel_Layout);
+            // 
+            // dSkinLabel11
+            // 
+            this.dSkinLabel11.Font = new System.Drawing.Font("微软雅黑", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel11.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel11.Location = new System.Drawing.Point(8, 47);
+            this.dSkinLabel11.Name = "dSkinLabel11";
+            this.dSkinLabel11.Size = new System.Drawing.Size(47, 19);
+            this.dSkinLabel11.TabIndex = 3;
+            this.dSkinLabel11.Text = "共 0 首";
+            // 
+            // dSkinListBox4
+            // 
+            this.dSkinListBox4.BackColor = System.Drawing.Color.Transparent;
+            this.dSkinListBox4.Location = new System.Drawing.Point(0, 71);
+            this.dSkinListBox4.Name = "dSkinListBox4";
+            this.dSkinListBox4.ScrollBarWidth = 12;
+            this.dSkinListBox4.SelectionMode = DSkin.Controls.SelectionModes.Radio;
+            this.dSkinListBox4.Size = new System.Drawing.Size(500, 860);
+            this.dSkinListBox4.TabIndex = 2;
+            this.dSkinListBox4.Text = "dSkinListBox4";
+            this.dSkinListBox4.Value = 0D;
+            this.dSkinListBox4.ItemSelectedChanged += new System.EventHandler<DSkin.DirectUI.DuiControlEventArgs>(this.dSkinListBox4_ItemSelectedChanged);
+            this.dSkinListBox4.ItemClick += new System.EventHandler<DSkin.Controls.ItemClickEventArgs>(this.dSkinListBox4_ItemClick);
+            // 
+            // dSkinLabel10
+            // 
+            this.dSkinLabel10.AutoSize = false;
+            this.dSkinLabel10.BackColor = System.Drawing.Color.White;
+            this.dSkinLabel10.Location = new System.Drawing.Point(0, 70);
+            this.dSkinLabel10.Name = "dSkinLabel10";
+            this.dSkinLabel10.Size = new System.Drawing.Size(500, 1);
+            this.dSkinLabel10.TabIndex = 1;
+            // 
+            // dSkinLabel9
+            // 
+            this.dSkinLabel9.Font = new System.Drawing.Font("微软雅黑", 10.8F);
+            this.dSkinLabel9.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel9.Location = new System.Drawing.Point(210, 20);
+            this.dSkinLabel9.Name = "dSkinLabel9";
+            this.dSkinLabel9.Size = new System.Drawing.Size(81, 27);
+            this.dSkinLabel9.TabIndex = 0;
+            this.dSkinLabel9.Text = "播放列表";
+            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -479,6 +547,7 @@
             this.CaptionOffset = new System.Drawing.Point(10, 0);
             this.CaptionShowMode = DSkin.TextShowModes.Ordinary;
             this.ClientSize = new System.Drawing.Size(1920, 1041);
+            this.Controls.Add(this.PlayListPanel);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.belowPanel);
             this.Controls.Add(this.dSkinListBox1);
@@ -498,6 +567,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox2)).EndInit();
             this.dSkinPanel1.ResumeLayout(false);
             this.dSkinPanel1.PerformLayout();
+            this.PlayListPanel.ResumeLayout(false);
+            this.PlayListPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -530,6 +602,11 @@
         private DSkin.Controls.DSkinListBox dSkinListBox3;
         private DSkin.Controls.DSkinLabel dSkinLabel7;
         private DSkin.Controls.DSkinPictureBox dSkinPictureBox6;
+        private DSkin.Controls.DSkinPanel PlayListPanel;
+        private DSkin.Controls.DSkinLabel dSkinLabel9;
+        private DSkin.Controls.DSkinLabel dSkinLabel10;
+        private DSkin.Controls.DSkinListBox dSkinListBox4;
+        private DSkin.Controls.DSkinLabel dSkinLabel11;
     }
 }
 
