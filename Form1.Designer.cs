@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWin));
             this.dSkinListBox1 = new DSkin.Controls.DSkinListBox();
             this.belowPanel = new DSkin.Controls.DSkinPanel();
@@ -60,6 +61,21 @@
             this.dSkinListBox4 = new DSkin.Controls.DSkinListBox();
             this.dSkinLabel10 = new DSkin.Controls.DSkinLabel();
             this.dSkinLabel9 = new DSkin.Controls.DSkinLabel();
+            this.AllMusicPanel = new DSkin.Controls.DSkinPanel();
+            this.dSkinListBox5 = new DSkin.Controls.DSkinListBox();
+            this.dSkinLabel20 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel19 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel18 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel17 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel16 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel15 = new DSkin.Controls.DSkinLabel();
+            this.dSkinPanel2 = new DSkin.Controls.DSkinPanel();
+            this.dSkinPictureBox7 = new DSkin.Controls.DSkinPictureBox();
+            this.dSkinTextBox2 = new DSkin.Controls.DSkinTextBox();
+            this.dSkinLabel14 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel13 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel12 = new DSkin.Controls.DSkinLabel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox1)).BeginInit();
             this.belowPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
@@ -68,6 +84,9 @@
             this.dSkinPanel1.SuspendLayout();
             this.PlayListPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox4)).BeginInit();
+            this.AllMusicPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox5)).BeginInit();
+            this.dSkinPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dSkinListBox1
@@ -157,6 +176,7 @@
             this.dSkinPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.dSkinPictureBox2.TabIndex = 9;
             this.dSkinPictureBox2.Text = "dSkinPictureBox1";
+            this.dSkinPictureBox2.Click += new System.EventHandler(this.dSkinPictureBox2_Click);
             this.dSkinPictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dSkinPictureBox2_MouseDown);
             this.dSkinPictureBox2.MouseEnter += new System.EventHandler(this.dSkinPictureBox2_MouseEnter);
             this.dSkinPictureBox2.MouseLeave += new System.EventHandler(this.dSkinPictureBox2_MouseLeave);
@@ -173,6 +193,7 @@
             this.dSkinPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.dSkinPictureBox3.TabIndex = 9;
             this.dSkinPictureBox3.Text = "dSkinPictureBox1";
+            this.dSkinPictureBox3.Click += new System.EventHandler(this.dSkinPictureBox3_Click);
             this.dSkinPictureBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dSkinPictureBox3_MouseDown);
             this.dSkinPictureBox3.MouseEnter += new System.EventHandler(this.dSkinPictureBox3_MouseEnter);
             this.dSkinPictureBox3.MouseLeave += new System.EventHandler(this.dSkinPictureBox3_MouseLeave);
@@ -240,7 +261,7 @@
             // dSkinLabel1
             // 
             this.dSkinLabel1.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dSkinLabel1.Location = new System.Drawing.Point(100, 7);
+            this.dSkinLabel1.Location = new System.Drawing.Point(111, 7);
             this.dSkinLabel1.Name = "dSkinLabel1";
             this.dSkinLabel1.Size = new System.Drawing.Size(192, 27);
             this.dSkinLabel1.TabIndex = 4;
@@ -275,6 +296,9 @@
             this.dSkinTrackBar1.TabIndex = 3;
             this.dSkinTrackBar1.Text = "dSkinTrackBar1";
             this.dSkinTrackBar1.Value = 450;
+            this.dSkinTrackBar1.Layout += new System.Windows.Forms.LayoutEventHandler(this.dSkinTrackBar1_Layout);
+            this.dSkinTrackBar1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dSkinTrackBar1_MouseDown);
+            this.dSkinTrackBar1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dSkinTrackBar1_MouseUp);
             // 
             // fugaiui
             // 
@@ -515,6 +539,7 @@
             this.dSkinListBox4.Value = 0D;
             this.dSkinListBox4.ItemSelectedChanged += new System.EventHandler<DSkin.DirectUI.DuiControlEventArgs>(this.dSkinListBox4_ItemSelectedChanged);
             this.dSkinListBox4.ItemClick += new System.EventHandler<DSkin.Controls.ItemClickEventArgs>(this.dSkinListBox4_ItemClick);
+            this.dSkinListBox4.DoubleClick += new System.EventHandler(this.dSkinListBox4_DoubleClick);
             // 
             // dSkinLabel10
             // 
@@ -535,6 +560,185 @@
             this.dSkinLabel9.TabIndex = 0;
             this.dSkinLabel9.Text = "播放列表";
             // 
+            // AllMusicPanel
+            // 
+            this.AllMusicPanel.BackColor = System.Drawing.Color.Transparent;
+            this.AllMusicPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AllMusicPanel.BackgroundImage")));
+            this.AllMusicPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.AllMusicPanel.Controls.Add(this.dSkinListBox5);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel20);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel19);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel18);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel17);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel16);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel15);
+            this.AllMusicPanel.Controls.Add(this.dSkinPanel2);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel14);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel13);
+            this.AllMusicPanel.Controls.Add(this.dSkinLabel12);
+            this.AllMusicPanel.Location = new System.Drawing.Point(250, 30);
+            this.AllMusicPanel.Name = "AllMusicPanel";
+            this.AllMusicPanel.RightBottom = ((System.Drawing.Image)(resources.GetObject("AllMusicPanel.RightBottom")));
+            this.AllMusicPanel.Size = new System.Drawing.Size(1670, 931);
+            this.AllMusicPanel.TabIndex = 5;
+            this.AllMusicPanel.Text = "dSkinPanel2";
+            // 
+            // dSkinListBox5
+            // 
+            this.dSkinListBox5.BackColor = System.Drawing.Color.Transparent;
+            this.dSkinListBox5.Location = new System.Drawing.Point(0, 101);
+            this.dSkinListBox5.Name = "dSkinListBox5";
+            this.dSkinListBox5.ScrollBarWidth = 12;
+            this.dSkinListBox5.SelectionMode = DSkin.Controls.SelectionModes.Radio;
+            this.dSkinListBox5.Size = new System.Drawing.Size(1670, 830);
+            this.dSkinListBox5.TabIndex = 10;
+            this.dSkinListBox5.Text = "dSkinListBox5";
+            this.dSkinListBox5.Value = 0D;
+            this.dSkinListBox5.ItemSelectedChanged += new System.EventHandler<DSkin.DirectUI.DuiControlEventArgs>(this.dSkinListBox5_ItemSelectedChanged);
+            this.dSkinListBox5.ItemClick += new System.EventHandler<DSkin.Controls.ItemClickEventArgs>(this.dSkinListBox5_ItemClick);
+            this.dSkinListBox5.DoubleClick += new System.EventHandler(this.dSkinListBox5_DoubleClick);
+            // 
+            // dSkinLabel20
+            // 
+            this.dSkinLabel20.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel20.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel20.Location = new System.Drawing.Point(1500, 75);
+            this.dSkinLabel20.Name = "dSkinLabel20";
+            this.dSkinLabel20.Size = new System.Drawing.Size(36, 22);
+            this.dSkinLabel20.TabIndex = 9;
+            this.dSkinLabel20.Text = "大小";
+            // 
+            // dSkinLabel19
+            // 
+            this.dSkinLabel19.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel19.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel19.Location = new System.Drawing.Point(1350, 75);
+            this.dSkinLabel19.Name = "dSkinLabel19";
+            this.dSkinLabel19.Size = new System.Drawing.Size(36, 22);
+            this.dSkinLabel19.TabIndex = 8;
+            this.dSkinLabel19.Text = "时长";
+            // 
+            // dSkinLabel18
+            // 
+            this.dSkinLabel18.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel18.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel18.Location = new System.Drawing.Point(1000, 75);
+            this.dSkinLabel18.Name = "dSkinLabel18";
+            this.dSkinLabel18.Size = new System.Drawing.Size(67, 22);
+            this.dSkinLabel18.TabIndex = 7;
+            this.dSkinLabel18.Text = "音乐专辑";
+            // 
+            // dSkinLabel17
+            // 
+            this.dSkinLabel17.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel17.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel17.Location = new System.Drawing.Point(650, 75);
+            this.dSkinLabel17.Name = "dSkinLabel17";
+            this.dSkinLabel17.Size = new System.Drawing.Size(36, 22);
+            this.dSkinLabel17.TabIndex = 6;
+            this.dSkinLabel17.Text = "歌手";
+            // 
+            // dSkinLabel16
+            // 
+            this.dSkinLabel16.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel16.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel16.Location = new System.Drawing.Point(50, 75);
+            this.dSkinLabel16.Name = "dSkinLabel16";
+            this.dSkinLabel16.Size = new System.Drawing.Size(67, 22);
+            this.dSkinLabel16.TabIndex = 5;
+            this.dSkinLabel16.Text = "音乐标题";
+            // 
+            // dSkinLabel15
+            // 
+            this.dSkinLabel15.AutoSize = false;
+            this.dSkinLabel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dSkinLabel15.Location = new System.Drawing.Point(0, 100);
+            this.dSkinLabel15.Name = "dSkinLabel15";
+            this.dSkinLabel15.Size = new System.Drawing.Size(1670, 1);
+            this.dSkinLabel15.TabIndex = 4;
+            // 
+            // dSkinPanel2
+            // 
+            this.dSkinPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.dSkinPanel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("dSkinPanel2.BackgroundImage")));
+            this.dSkinPanel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.dSkinPanel2.Controls.Add(this.dSkinPictureBox7);
+            this.dSkinPanel2.Controls.Add(this.dSkinTextBox2);
+            this.dSkinPanel2.Location = new System.Drawing.Point(1445, 32);
+            this.dSkinPanel2.Name = "dSkinPanel2";
+            this.dSkinPanel2.RightBottom = ((System.Drawing.Image)(resources.GetObject("dSkinPanel2.RightBottom")));
+            this.dSkinPanel2.Size = new System.Drawing.Size(200, 30);
+            this.dSkinPanel2.TabIndex = 3;
+            this.dSkinPanel2.Text = "dSkinPanel2";
+            // 
+            // dSkinPictureBox7
+            // 
+            this.dSkinPictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("dSkinPictureBox7.Image")));
+            this.dSkinPictureBox7.Images = new System.Drawing.Image[] {
+        ((System.Drawing.Image)(((System.Drawing.Image)(resources.GetObject("dSkinPictureBox7.Images")))))};
+            this.dSkinPictureBox7.Location = new System.Drawing.Point(173, 8);
+            this.dSkinPictureBox7.Name = "dSkinPictureBox7";
+            this.dSkinPictureBox7.Size = new System.Drawing.Size(15, 15);
+            this.dSkinPictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dSkinPictureBox7.TabIndex = 1;
+            this.dSkinPictureBox7.Text = "dSkinPictureBox7";
+            this.dSkinPictureBox7.Click += new System.EventHandler(this.dSkinPictureBox7_Click);
+            this.dSkinPictureBox7.MouseEnter += new System.EventHandler(this.dSkinPictureBox7_MouseEnter);
+            this.dSkinPictureBox7.MouseLeave += new System.EventHandler(this.dSkinPictureBox7_MouseLeave);
+            // 
+            // dSkinTextBox2
+            // 
+            this.dSkinTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(125)))), ((int)(((byte)(129)))));
+            this.dSkinTextBox2.BitmapCache = false;
+            this.dSkinTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dSkinTextBox2.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinTextBox2.ForeColor = System.Drawing.Color.White;
+            this.dSkinTextBox2.Location = new System.Drawing.Point(10, 4);
+            this.dSkinTextBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.dSkinTextBox2.Name = "dSkinTextBox2";
+            this.dSkinTextBox2.Size = new System.Drawing.Size(152, 24);
+            this.dSkinTextBox2.TabIndex = 0;
+            this.dSkinTextBox2.TransparencyKey = System.Drawing.Color.Empty;
+            this.dSkinTextBox2.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.dSkinTextBox2.WaterFont = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinTextBox2.WaterText = "搜索本地音乐";
+            this.dSkinTextBox2.WaterTextOffset = new System.Drawing.Point(0, 0);
+            // 
+            // dSkinLabel14
+            // 
+            this.dSkinLabel14.AutoSize = false;
+            this.dSkinLabel14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dSkinLabel14.Location = new System.Drawing.Point(0, 70);
+            this.dSkinLabel14.Name = "dSkinLabel14";
+            this.dSkinLabel14.Size = new System.Drawing.Size(1670, 1);
+            this.dSkinLabel14.TabIndex = 2;
+            // 
+            // dSkinLabel13
+            // 
+            this.dSkinLabel13.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.dSkinLabel13.Location = new System.Drawing.Point(134, 28);
+            this.dSkinLabel13.Margin = new System.Windows.Forms.Padding(0);
+            this.dSkinLabel13.Name = "dSkinLabel13";
+            this.dSkinLabel13.Size = new System.Drawing.Size(76, 22);
+            this.dSkinLabel13.TabIndex = 1;
+            this.dSkinLabel13.Text = "共0首音乐";
+            // 
+            // dSkinLabel12
+            // 
+            this.dSkinLabel12.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dSkinLabel12.ForeColor = System.Drawing.Color.White;
+            this.dSkinLabel12.Location = new System.Drawing.Point(45, 22);
+            this.dSkinLabel12.Margin = new System.Windows.Forms.Padding(0);
+            this.dSkinLabel12.Name = "dSkinLabel12";
+            this.dSkinLabel12.Size = new System.Drawing.Size(90, 29);
+            this.dSkinLabel12.TabIndex = 0;
+            this.dSkinLabel12.Text = "全部歌曲";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -548,6 +752,7 @@
             this.CaptionShowMode = DSkin.TextShowModes.Ordinary;
             this.ClientSize = new System.Drawing.Size(1920, 1041);
             this.Controls.Add(this.PlayListPanel);
+            this.Controls.Add(this.AllMusicPanel);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.belowPanel);
             this.Controls.Add(this.dSkinListBox1);
@@ -570,6 +775,11 @@
             this.PlayListPanel.ResumeLayout(false);
             this.PlayListPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox4)).EndInit();
+            this.AllMusicPanel.ResumeLayout(false);
+            this.AllMusicPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox5)).EndInit();
+            this.dSkinPanel2.ResumeLayout(false);
+            this.dSkinPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -607,6 +817,21 @@
         private DSkin.Controls.DSkinLabel dSkinLabel10;
         private DSkin.Controls.DSkinListBox dSkinListBox4;
         private DSkin.Controls.DSkinLabel dSkinLabel11;
+        private DSkin.Controls.DSkinPanel AllMusicPanel;
+        private DSkin.Controls.DSkinLabel dSkinLabel16;
+        private DSkin.Controls.DSkinLabel dSkinLabel15;
+        private DSkin.Controls.DSkinPanel dSkinPanel2;
+        private DSkin.Controls.DSkinPictureBox dSkinPictureBox7;
+        private DSkin.Controls.DSkinTextBox dSkinTextBox2;
+        private DSkin.Controls.DSkinLabel dSkinLabel14;
+        private DSkin.Controls.DSkinLabel dSkinLabel13;
+        private DSkin.Controls.DSkinLabel dSkinLabel12;
+        private DSkin.Controls.DSkinListBox dSkinListBox5;
+        private DSkin.Controls.DSkinLabel dSkinLabel20;
+        private DSkin.Controls.DSkinLabel dSkinLabel19;
+        private DSkin.Controls.DSkinLabel dSkinLabel18;
+        private DSkin.Controls.DSkinLabel dSkinLabel17;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

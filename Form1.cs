@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DSkin.Forms;
 using Un4seen.Bass;
+using System.Data.SqlClient;
+using System.Data;
+using Shell32;
+using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace musicV2
 {
@@ -21,12 +26,27 @@ namespace musicV2
         List<AlbumTemplate> listItem3 = new List<AlbumTemplate>();
         List<MusicalTemplate> listItem4 = new List<MusicalTemplate>();
         List<MusicFile> musicFiles = new List<MusicFile>();
+        List<AllMusicItemTemplate> AllMusicList = new List<AllMusicItemTemplate>();
+        List<ListMusicMenuTemplate> list01 = new List<ListMusicMenuTemplate>();//播放列表模板LIST
+        List<string> AllMusic_path = new List<string>();
+        List<string> playlist = new List<string>();
+
+        public bool playListChangeIf = true;//判断播放列表是否改变（更新）
+        public bool diyibof_tg = true;
+        public bool bofang_tg = false;
+        public int stream;//音频流
+        public int musicoon = 0;//记录当前播放的是第几首歌曲
+        public bool initializationPlaylist = false;//初始化音乐列表标志位
         public MainWin()
         {
 
             InitializeComponent();
 
             PlayListPanel.Hide();
+            //AllMusicPanel.Hide();
+
+            timer1.Interval = 100;
+            timer1.Enabled = true;
 
             fugaiui.Image = null;
             listItem2.Add(new gedanItemTemplate() { Text = "浏览音乐", Tag = null });
@@ -318,21 +338,70 @@ namespace musicV2
             dSkinLabel3.Text = "00:00";
             dSkinTrackBar1.Value = 0;
 
-            
+            string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
+            SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
+
+            String sqlCmd = "SELECT MusicPath FROM Music3 ;";
+            SqlCommand cmd = new SqlCommand(sqlCmd, conn);
+            conn.Open(); //数据库连接打开
+            cmd.ExecuteNonQuery();//数据库操作执行
+            SqlDataReader r = cmd.ExecuteReader();
+            int i = 0;
+            while(r.Read())
+            {
+                
+                AllMusic_path.Add(r["MusicPath"].ToString());
+                i++;
+            }
+            r.Close();
+            conn.Close();//数据库连接关闭
+
+            for(int n=0;n<i;n++)
+            {
+                string musicfile = AllMusic_path[n];
+
+                string file = musicfile;
+                ShellClass sh = new ShellClass();
+                Folder dir = sh.NameSpace(Path.GetDirectoryName(file));
+                FolderItem item = dir.ParseName(Path.GetFileName(file));
+                string str = dir.GetDetailsOf(item, 27); // 获取歌曲时长。
+                string str2 = dir.GetDetailsOf(item, 21); // 获取MP3 歌曲名。
+                string str3 = dir.GetDetailsOf(item, 1); // MP3 文件大小。
+                string str4 = dir.GetDetailsOf(item, 13); // 获取MP3 歌手。
+                string str5 = dir.GetDetailsOf(item, 14); // 获取MP3 专辑。
+
+                playlist.Add(musicfile);/*在playlist载入全部音乐路径*/
+
+                int jiou = n % 2;
+                if(jiou==0)
+                {
+                    AllMusicList.Add(new AllMusicItemTemplate() { Tag = "0", Text = (n + 1).ToString() + '&' + str2 + '&' + "loading" + '&' + str4 + '&' + str5 + '&' + str + '&' + str3 });
+                }
+                if(jiou!=0)
+                {
+                    AllMusicList.Add(new AllMusicItemTemplate() { Tag = "1", Text = (n + 1).ToString() + '&' + str2 + '&' + "loading" + '&' + str4 + '&' + str5 + '&' + str + '&' + str3 });
+                }
+            }
+            for (int j = 0; j < AllMusicList.Count(); j += 1)
+            {
+                dSkinListBox5.Items.Add(AllMusicList[j]);
+            }
+            dSkinLabel13.Text = "共" + AllMusicList.Count().ToString() + "首音乐";
+            dSkinLabel7.Text = playlist.Count().ToString();
+
 
         }
 
-        public bool diyibof_tg = true;
-        public bool bofang_tg = false;
-        public int stream;
+       
 
         private void dSkinPictureBox1_Click(object sender, EventArgs e)
         {
 
-            if(musicFiles.Count()==0)
+            if(playlist.Count()==0)
             {
                 return;
             }
+           
 
             if (bofang_tg == false)
             {
@@ -340,13 +409,16 @@ namespace musicV2
                 {
                     if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
                     {
-                        stream = Bass.BASS_StreamCreateFile(musicFiles[0].Music_PATH(), 0, 0, BASSFlag.BASS_DEFAULT);
+                        stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
                         if (stream != 0)
                         {
                             // 播放通道（即播放文件）
                             Bass.BASS_ChannelPlay(stream, false);
                             bofang_tg = true;
                             diyibof_tg = false;
+                            double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                            dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                            timer1.Start();
                             return;
                             
                         }
@@ -361,6 +433,9 @@ namespace musicV2
                 {
                     Bass.BASS_ChannelPlay(stream, false);
                     bofang_tg = true;
+                    double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                    dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                    timer1.Start();
                     return;
                 }
                 
@@ -370,6 +445,7 @@ namespace musicV2
                 //暂停播放
                 Bass.BASS_ChannelPause(stream);
                 bofang_tg = false;
+                timer1.Stop();
                 return;
             }
         }
@@ -391,6 +467,8 @@ namespace musicV2
 
             if (PlayListPanel_TG == false)
             {
+                PlayListPanelUPDATE();
+                PlayListPanel.BringToFront();
                 PlayListPanel.Show();
                 PlayListPanel_TG = true;
                 return;
@@ -405,26 +483,48 @@ namespace musicV2
         public bool PlayListPanel_TG = false;
         private void dSkinListBox1_ItemClick(object sender, DSkin.Controls.ItemClickEventArgs e)
         {
-          
+            
         }
-        List<ListMusicMenuTemplate> list01 = new List<ListMusicMenuTemplate>();
-        private void PlayListPanel_Layout(object sender, LayoutEventArgs e)
+
+        public void PlayListPanelUPDATE()
         {
             PlayListPanel.Location = new Point(1420, 30);
-            list01.Add(new ListMusicMenuTemplate() { Text = "让酒&电视剧《沙海》插曲&摩登兄弟&04:26" });
-            list01.Add(new ListMusicMenuTemplate() { Text = "左手指月&电视剧《香蜜沉沉烬如霜》片尾曲&萨顶顶&03:50" });
-            list01.Add(new ListMusicMenuTemplate() { Text = "Fly Away&&Anjulie / TheFatRa&03:14" });
-            list01.Add(new ListMusicMenuTemplate() { Text = "我曾经也想过一了百了&电影《北京遇上西雅图之不二情书》主题曲&汤唯&05:31" });
+            if (playListChangeIf == false)
+                return;//播放列表未更新，直接跳过
+            dSkinListBox4.Items.Clear();
+            list01.Clear();
+            for (int i = 0; i < playlist.Count(); i++)
+            {
+                string mupath = playlist[i];
+                string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
+                SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
 
-            dSkinListBox4.Items.Add(list01[0]);
-            dSkinListBox4.Items.Add(list01[1]);
-            dSkinListBox4.Items.Add(list01[2]);
-            dSkinListBox4.Items.Add(list01[3]);
+                String sqlCmd = "SELECT MusicName,MusicSummary,MusicAuthor,MusicDuration  FROM Music3 ";
+                sqlCmd += "WHERE MusicPath=@mupath;";
+                SqlCommand cmd = new SqlCommand(sqlCmd, conn);
+                cmd.Parameters.Add("@mupath", SqlDbType.NVarChar).Value = mupath;//添加参数数组
+                conn.Open(); //数据库连接打开
+                cmd.ExecuteNonQuery();//数据库操作执行
+                SqlDataReader r = cmd.ExecuteReader();
+                while (r.Read())
+                {
+                    list01.Add(new ListMusicMenuTemplate() { Text = r["MusicName"].ToString() + '&' + r["MusicSummary"].ToString() + '&' + r["MusicAuthor"].ToString() + '&' + r["MusicDuration"] });
+                    dSkinListBox4.Items.Add(list01[i]);
+                }
+                r.Close();
+                conn.Close();//数据库连接关闭
+            }
+            dSkinLabel11.Text = "共" +list01.Count().ToString() + "首音乐"; 
+            playListChangeIf = false;
+        }
+        private void PlayListPanel_Layout(object sender, LayoutEventArgs e)
+        {
+            
         }
 
         private void dSkinListBox4_ItemClick(object sender, DSkin.Controls.ItemClickEventArgs e)
         {
-
+            
         }
 
         private void dSkinListBox4_ItemSelectedChanged(object sender, DSkin.DirectUI.DuiControlEventArgs e)
@@ -439,6 +539,468 @@ namespace musicV2
                     list01[i].Selection = false;
             }
         }
+
+        private void dSkinListBox5_ItemSelectedChanged(object sender, DSkin.DirectUI.DuiControlEventArgs e)
+        {
+            for (int i = 0; i < this.AllMusicList.Count(); i += 1)
+            {
+                if (AllMusicList[i].IsSelected == true)
+                {
+                    int index = dSkinListBox5.Items.IndexOf(dSkinListBox5.SelectedItem);//获得歌单列表选中项的索引下标
+                    dSkinListBox5.Items[index].IsSelected = true;
+                }
+                else
+                    AllMusicList[i].Selection = false;
+            }
+        }
+
+        private void dSkinPictureBox7_MouseEnter(object sender, EventArgs e)
+        {
+            dSkinPictureBox7.Image = Image.FromFile("../pic/搜索1.png", false);
+        }
+
+        private void dSkinPictureBox7_MouseLeave(object sender, EventArgs e)
+        {
+            dSkinPictureBox7.Image = Image.FromFile("../pic/搜索0.png", false);
+        }
+
+        private void dSkinPictureBox7_Click(object sender, EventArgs e)
+        {
+            playListChangeIf = true;
+            string shousuotext = dSkinTextBox2.Text.ToString();
+            if (shousuotext == null)
+                return;
+            dSkinListBox5.Items.Clear();
+            AllMusicList.Clear();
+            AllMusic_path.Clear();
+            string shousuotext1 = '%' + shousuotext + '%';
+            string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
+            SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
+
+            String sqlCmd = "SELECT MusicPath FROM Music3 ";
+            sqlCmd += "WHERE MusicName LIKE @shousuotext1;";
+            SqlCommand cmd = new SqlCommand(sqlCmd, conn);
+            cmd.Parameters.Add("@shousuotext1", SqlDbType.NVarChar).Value = shousuotext1;//添加参数数组
+            conn.Open(); //数据库连接打开
+            cmd.ExecuteNonQuery();//数据库操作执行
+            SqlDataReader r = cmd.ExecuteReader();
+            int i = 0;
+            while (r.Read())
+            {
+
+                AllMusic_path.Add(r["MusicPath"].ToString());
+                i++;
+            }
+            r.Close();
+            conn.Close();//数据库连接关闭
+
+            for (int n = 0; n < i; n++)
+            {
+                string musicfile = AllMusic_path[n];
+
+                string file = musicfile;
+                ShellClass sh = new ShellClass();
+                Folder dir = sh.NameSpace(Path.GetDirectoryName(file));
+                FolderItem item = dir.ParseName(Path.GetFileName(file));
+                string str = dir.GetDetailsOf(item, 27); // 获取歌曲时长。
+                string str2 = dir.GetDetailsOf(item, 21); // 获取MP3 歌曲名。
+                string str3 = dir.GetDetailsOf(item, 1); // MP3 文件大小。
+                string str4 = dir.GetDetailsOf(item, 13); // 获取MP3 歌手。
+                string str5 = dir.GetDetailsOf(item, 14); // 获取MP3 专辑。
+
+                int jiou = n % 2;
+                if (jiou == 0)
+                {
+                    AllMusicList.Add(new AllMusicItemTemplate() { Tag = "0", Text = (n + 1).ToString() + '&' + str2 + '&' + "loading" + '&' + str4 + '&' + str5 + '&' + str + '&' + str3 });
+                }
+                if (jiou != 0)
+                {
+                    AllMusicList.Add(new AllMusicItemTemplate() { Tag = "1", Text = (n + 1).ToString() + '&' + str2 + '&' + "loading" + '&' + str4 + '&' + str5 + '&' + str + '&' + str3 });
+                }
+            }
+            for (int j = 0; j < AllMusicList.Count(); j += 1)
+            {
+                dSkinListBox5.Items.Add(AllMusicList[j]);
+            }
+            initializationPlaylist = false;
+            if (initializationPlaylist == false)
+            {
+                playlist.Clear();
+                for (int s = 0; s < AllMusic_path.Count(); s++)
+                {
+                    playlist.Add(AllMusic_path[s]);
+                }
+                initializationPlaylist = true;
+            }
+            dSkinLabel11.Text = "共" + AllMusicList.Count().ToString() + "首音乐";
+            dSkinLabel7.Text = playlist.Count().ToString();
+            
+        }
+
+        private void dSkinPictureBox3_Click(object sender, EventArgs e)//下一曲
+        {
+            if (playlist.Count() == 0)
+                return;
+            Bass.BASS_StreamFree(stream);
+            stream = 0;
+            if (musicoon < playlist.Count()-1)
+            {
+                musicoon++;
+                if (diyibof_tg == true)
+                {
+                    if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+                    {
+                        stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
+                        if (stream != 0)
+                        {
+                            // 播放通道（即播放文件）
+                            Bass.BASS_ChannelPlay(stream, false);
+                            //dSkinPictureBox1.Image = Image.FromFile("../pic/播放01.png", false);
+                            dSkinPictureBox1.Tag = "1";
+                            dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                            mousel_leave = true;
+                            bofang_tg = true;
+                            diyibof_tg = false;
+                            setting(playlist[musicoon]);
+                            double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                            dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                            timer1.Start();
+                            return;
+
+                        }
+                    }
+                    else
+                    {
+                        // steam为0时报错
+                        Console.WriteLine("Stream error: {0}", Bass.BASS_ErrorGetCode());
+                    }
+                }
+                else
+                {
+                    stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
+                    if (stream != 0)
+                    {
+                        // 播放通道（即播放文件）
+                        Bass.BASS_ChannelPlay(stream, false);
+                        bofang_tg = true;
+                        diyibof_tg = false;
+                        dSkinPictureBox1.Tag = "1";
+                        dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                        mousel_leave = true;
+                        setting(playlist[musicoon]);
+                        double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                        dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                        timer1.Start();
+                        return;
+                    }
+                }
+                
+            }
+            if (musicoon >= playlist.Count()-1)
+            {
+                musicoon = 0;
+                if (diyibof_tg == true)
+                {
+                    if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+                    {
+                        stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
+                        if (stream != 0)
+                        {
+                            // 播放通道（即播放文件）
+                            Bass.BASS_ChannelPlay(stream, false);
+                            bofang_tg = true;
+                            diyibof_tg = false;
+                            dSkinPictureBox1.Tag = "1";
+                            dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                            mousel_leave = true;
+                            setting(playlist[musicoon]);
+                            double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                            dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                            timer1.Start();
+                            return;
+
+                        }
+                    }
+                    else
+                    {
+                        // steam为0时报错
+                        Console.WriteLine("Stream error: {0}", Bass.BASS_ErrorGetCode());
+                    }
+                }
+                else
+                {
+                    stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
+                    if (stream != 0)
+                    {
+                        // 播放通道（即播放文件）
+                        Bass.BASS_ChannelPlay(stream, false);
+                        bofang_tg = true;
+                        diyibof_tg = false;
+                        dSkinPictureBox1.Tag = "1";
+                        dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                        mousel_leave = true;
+                        setting(playlist[musicoon]);
+                        double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                        dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                        timer1.Start();
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void dSkinPictureBox2_Click(object sender, EventArgs e)//上一曲
+        {
+            if (playlist.Count() == 0)
+                return;
+            Bass.BASS_StreamFree(stream);
+            stream = 0;
+            if (playlist.Count() == 0)
+                return;
+            if(musicoon<=0)
+            {
+                musicoon = playlist.Count()-1;
+                if (diyibof_tg == true)
+                {
+                    if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+                    {
+                        stream = Bass.BASS_StreamCreateFile(playlist[musicoon-1], 0, 0, BASSFlag.BASS_DEFAULT);
+                        if (stream != 0)
+                        {
+                            // 播放通道（即播放文件）
+                            Bass.BASS_ChannelPlay(stream, false);
+                            bofang_tg = true;
+                            diyibof_tg = false;
+                            dSkinPictureBox1.Tag = "1";
+                            dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                            mousel_leave = true;
+                            setting(playlist[musicoon-1]);
+                            double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                            dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                            timer1.Start();
+                            return;
+
+                        }
+                    }
+                    else
+                    {
+                        // steam为0时报错
+                        Console.WriteLine("Stream error: {0}", Bass.BASS_ErrorGetCode());
+                    }
+                }
+                else
+                {
+                    stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
+                    if (stream != 0)
+                    {
+                        // 播放通道（即播放文件）
+                        
+                        Bass.BASS_ChannelPlay(stream, false);
+                        bofang_tg = true;
+                        diyibof_tg = false;
+                        dSkinPictureBox1.Tag = "1";
+                        dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                        mousel_leave = true;
+                        setting(playlist[musicoon]);
+                        double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                        dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                        timer1.Start();
+                        return;
+                    }
+                }
+            }
+            if(musicoon>0)
+            {
+                musicoon--;
+                if (diyibof_tg == true)
+                {
+                    if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+                    {
+                        stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
+                        if (stream != 0)
+                        {
+                            // 播放通道（即播放文件）
+                            Bass.BASS_ChannelPlay(stream, false);
+                            bofang_tg = true;
+                            diyibof_tg = false;
+                            dSkinPictureBox1.Tag = "1";
+                            dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                            mousel_leave = true;
+                            setting(playlist[musicoon]);
+                            double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                            dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                            timer1.Start();
+                            return;
+
+                        }
+                    }
+                    else
+                    {
+                        // steam为0时报错
+                        Console.WriteLine("Stream error: {0}", Bass.BASS_ErrorGetCode());
+                    }
+                }
+                else
+                {
+                    stream = Bass.BASS_StreamCreateFile(playlist[musicoon], 0, 0, BASSFlag.BASS_DEFAULT);
+                    if (stream != 0)
+                    {
+                        // 播放通道（即播放文件）
+                        Bass.BASS_ChannelPlay(stream, false);
+                        bofang_tg = true;
+                        diyibof_tg = false;
+                        dSkinPictureBox1.Tag = "1";
+                        dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                        mousel_leave = true;
+                        setting(playlist[musicoon]);
+                        double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                        dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                        timer1.Start();
+                        return;
+                    }
+                }
+            }
+        }
+
+        public void setting(string str)
+        {
+            string sttr = str;
+            string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
+            SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
+
+            String sqlCmd = "SELECT MusicCover,MusicName,MusicSummary,MusicAuthor,MusicDuration FROM Music3 ";
+            sqlCmd += "WHERE MusicPath = @sttr;";
+            SqlCommand cmd = new SqlCommand(sqlCmd, conn);
+            cmd.Parameters.Add("@sttr", SqlDbType.NVarChar).Value = sttr;//添加参数数组
+            conn.Open(); //数据库连接打开
+            cmd.ExecuteNonQuery();//数据库操作执行
+            //cmd.ExecuteReader();
+            SqlDataReader r = cmd.ExecuteReader();
+            while (r.Read())
+            {
+                gequfengmian.Image = Image.FromFile(r["MusicCover"].ToString());
+                dSkinLabel1.Text = r["MusicName"].ToString();
+                if(r["MusicSummary"].ToString()!="loading")
+                {
+                    dSkinLabel2.Text = r["MusicSummary"].ToString();
+                }
+                else
+                {
+                    dSkinLabel2.Text = r["MusicAuthor"].ToString();
+                }
+                dSkinLabel4.Text = r["MusicDuration"].ToString();
+            }
+            r.Close();
+            conn.Close();//数据库连接关闭
+        }
+
+        private void dSkinTrackBar1_Layout(object sender, LayoutEventArgs e)
+        {
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            double streamTimeNow = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetPosition(stream));//获取当前音乐的播放时间
+            dSkinTrackBar1.Value = (Int32)Math.Ceiling(streamTimeNow);//向上取整并进行强制类型装换为int32然后赋值给进度条的当前值
+            TimeSpan ts = new TimeSpan(0, 0, (Int32)Math.Ceiling(streamTimeNow));
+            dSkinLabel3.Text = ((int)ts.TotalHours).ToString() + ":" + ((int)ts.Minutes).ToString() + ":" + ((int)ts.Seconds).ToString() ;
+        }
+
+        private void dSkinTrackBar1_MouseDown(object sender, MouseEventArgs e)
+        {
+            timer1.Stop();
+        }
+
+        private void dSkinTrackBar1_MouseUp(object sender, MouseEventArgs e)
+        {
+            /* 获取滑动条的播放进度 */
+            double pos = dSkinTrackBar1.Value;
+
+            /* 设置播放进度 */
+            Bass.BASS_ChannelSetPosition(stream, Bass.BASS_ChannelSeconds2Bytes(stream, pos));
+            timer1.Start();
+        }
+
+       
+        private void dSkinListBox5_ItemClick(object sender, DSkin.Controls.ItemClickEventArgs e)
+        {
+            
+        }
+
+        private void dSkinListBox5_DoubleClick(object sender, EventArgs e)
+        {
+            if (dSkinListBox5.SelectedItem == null)
+                return;
+            Bass.BASS_StreamFree(stream);
+            int index = dSkinListBox5.Items.IndexOf(dSkinListBox5.SelectedItem);//获得歌单列表选中项的索引下标
+            Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
+            stream = Bass.BASS_StreamCreateFile(AllMusic_path[index], 0, 0, BASSFlag.BASS_DEFAULT);
+            if (initializationPlaylist == false)
+            {
+                playlist.Clear();
+                for (int s = 0; s < AllMusicList.Count(); s++)
+                {
+                    playlist.Add(AllMusic_path[s]);
+                }
+                initializationPlaylist = true;
+                dSkinLabel11.Text = "共" + list01.Count().ToString() + "首音乐";
+                dSkinLabel7.Text = playlist.Count().ToString();
+            }
+            if (stream != 0)
+            {
+                // 播放通道（即播放文件）
+                Bass.BASS_ChannelPlay(stream, false);
+                bofang_tg = true;
+                diyibof_tg = false;
+                dSkinPictureBox1.Tag = "1";
+                dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                mousel_leave = true;
+                setting(playlist[index]);
+                double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                timer1.Start();
+                musicoon = index;
+                return;
+            }
+        }
+
+        private void dSkinListBox4_DoubleClick(object sender, EventArgs e)
+        {
+            if (dSkinListBox4.SelectedItem == null)
+                return;
+            Bass.BASS_StreamFree(stream);
+            int index = dSkinListBox4.Items.IndexOf(dSkinListBox4.SelectedItem);//获得歌单列表选中项的索引下标
+            Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
+            stream = Bass.BASS_StreamCreateFile(playlist[index], 0, 0, BASSFlag.BASS_DEFAULT);
+            //if (initializationPlaylist == false)
+            //{
+            //    playlist.Clear();
+            //    for (int s = 0; s < AllMusicList.Count(); s++)
+            //    {
+            //        playlist.Add(AllMusic_path[s]);
+            //    }
+            //    initializationPlaylist = true;
+            //    dSkinLabel7.Text = "共" + playlist.Count().ToString() + "首音乐";
+            //}
+            if (stream != 0)
+            {
+                // 播放通道（即播放文件）
+                Bass.BASS_ChannelPlay(stream, false);
+                bofang_tg = true;
+                diyibof_tg = false;
+                dSkinPictureBox1.Tag = "1";
+                dSkinPictureBox1.Image = Image.FromFile("../pic/暂停00.png", false);
+                mousel_leave = true;
+                setting(playlist[index]);
+                double streamTime = Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream));//获取音乐的总时间
+                dSkinTrackBar1.Maximum = (Int32)Math.Ceiling(streamTime); //向上取整并进行强制类型装换为int32然后赋值给进度条的最大值
+                timer1.Start();
+                musicoon = index;
+                return;
+            }
+        }
+
+
     }
 }
 
