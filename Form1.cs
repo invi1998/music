@@ -16,6 +16,11 @@ using System.Data;
 using Shell32;
 using System.IO;
 using System.Drawing.Drawing2D;
+using WindowsFormsApplicationGDI;
+using DSkin.Animations;//动画类
+using DSkin.DirectUI;
+using DSkin.Common;
+using DSkin.Controls;
 
 namespace musicV2
 {
@@ -37,16 +42,25 @@ namespace musicV2
         public int stream;//音频流
         public int musicoon = 0;//记录当前播放的是第几首歌曲
         public bool initializationPlaylist = false;//初始化音乐列表标志位
+
+        public Image yuantu=null;
+        public int rotaangle = 0;
         public MainWin()
         {
 
             InitializeComponent();
 
             PlayListPanel.Hide();
+            //dSkinPictureBox8.Parent = MusicBIGPanel;
+            MusicBIGPanel.Hide();
             //AllMusicPanel.Hide();
 
             timer1.Interval = 100;
             timer1.Enabled = true;
+            timer2.Interval = 50;
+            timer2.Enabled = true;
+
+
 
             fugaiui.Image = null;
             listItem2.Add(new gedanItemTemplate() { Text = "浏览音乐", Tag = null });
@@ -341,7 +355,7 @@ namespace musicV2
             string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
             SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
 
-            String sqlCmd = "SELECT MusicPath FROM Music3 ;";
+            String sqlCmd = "SELECT MusicPath FROM Music4 ;";
             SqlCommand cmd = new SqlCommand(sqlCmd, conn);
             conn.Open(); //数据库连接打开
             cmd.ExecuteNonQuery();//数据库操作执行
@@ -499,7 +513,7 @@ namespace musicV2
                 string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
                 SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
 
-                String sqlCmd = "SELECT MusicName,MusicSummary,MusicAuthor,MusicDuration  FROM Music3 ";
+                String sqlCmd = "SELECT MusicName,MusicSummary,MusicAuthor,MusicDuration  FROM Music4 ";
                 sqlCmd += "WHERE MusicPath=@mupath;";
                 SqlCommand cmd = new SqlCommand(sqlCmd, conn);
                 cmd.Parameters.Add("@mupath", SqlDbType.NVarChar).Value = mupath;//添加参数数组
@@ -577,7 +591,7 @@ namespace musicV2
             string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
             SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
 
-            String sqlCmd = "SELECT MusicPath FROM Music3 ";
+            String sqlCmd = "SELECT MusicPath FROM Music4 ";
             sqlCmd += "WHERE MusicName LIKE @shousuotext1;";
             SqlCommand cmd = new SqlCommand(sqlCmd, conn);
             cmd.Parameters.Add("@shousuotext1", SqlDbType.NVarChar).Value = shousuotext1;//添加参数数组
@@ -868,7 +882,7 @@ namespace musicV2
             string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
             SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
 
-            String sqlCmd = "SELECT MusicCover,MusicName,MusicSummary,MusicAuthor,MusicDuration FROM Music3 ";
+            String sqlCmd = "SELECT MusicCover,MusicName,MusicSummary,MusicAuthor,MusicDuration FROM Music4 ";
             sqlCmd += "WHERE MusicPath = @sttr;";
             SqlCommand cmd = new SqlCommand(sqlCmd, conn);
             cmd.Parameters.Add("@sttr", SqlDbType.NVarChar).Value = sttr;//添加参数数组
@@ -1000,7 +1014,132 @@ namespace musicV2
             }
         }
 
+        public void BigPic(string picpath)
+        {
+            Image pic = Image.FromFile(picpath);
+            Bitmap bigpicImage = new Bitmap(pic);
+            int width = pic.Size.Width; // 图片的宽度
+            int height = pic.Size.Height; // 图片的高度
+            Rectangle picRect = new Rectangle(0, 0, width, height);
+            DSkin.ImageEffects.GaussianBlur(bigpicImage, ref picRect, 35, false);
+            dSkinPictureBox8.Image = bigpicImage;
 
+            Color Newcolor = Color.FromArgb(50, DSkin.Common.BitmapHelper.GetImageAverageColor(pic));
+            dSkinPictureBox9.BackColor = Newcolor;
+            dSkinPictureBox10.BackColor = Newcolor;
+        }
+
+        public bool picChangeIF = true;//是否更换歌曲
+        public bool picShowIF = false;//是否在显示歌曲封面大图
+        private void fugaiui_Click(object sender, EventArgs e)
+        {
+            if(picChangeIF==false)
+            {
+                if(picShowIF==false)//弹出歌曲大图显示页面
+                {
+                    MusicBIGPanel.BringToFront();
+                    //dSkinPictureBox8.Visible = true;//显示
+                    MusicBIGPanel.Show();
+                    picShowIF = true;
+                    return;
+                }
+                else if(picShowIF==true)//关闭歌曲大图显示
+                {
+                    //MusicBIGPanel.SendToBack();//将控件放置所有控件最底端
+                    //dSkinPictureBox8.Visible = false;//隐藏
+                    MusicBIGPanel.Hide();
+                    picShowIF = false;
+                    return;
+                }
+            }
+            else if(picChangeIF==true)
+            {
+                timer2.Start();
+                setpic();
+                return;
+            }
+            
+        }
+
+        public void setpic()
+        {
+            string sttr = playlist[musicoon];
+            string str1 = null;
+            string str2 = null;
+            string sql = "Data Source=.;Initial Catalog=MusicPlayerDateBase;Persist Security Info=True;User ID=123;Password=123;"; //编写连接字符串
+            SqlConnection conn = new SqlConnection(sql); //通过已经连接的数据库创建一个对此库的操作类
+
+            String sqlCmd = "SELECT MusicCover,MusicBigCover FROM Music4 ";
+            sqlCmd += "WHERE MusicPath = @sttr;";
+            SqlCommand cmd = new SqlCommand(sqlCmd, conn);
+            cmd.Parameters.Add("@sttr", SqlDbType.NVarChar).Value = sttr;//添加参数数组
+            conn.Open(); //数据库连接打开
+            cmd.ExecuteNonQuery();//数据库操作执行
+            SqlDataReader r = cmd.ExecuteReader();
+            while (r.Read())
+            {
+                str1 = r["MusicCover"].ToString();
+                str2 = r["MusicBigCover"].ToString();
+            }
+            r.Close();
+            conn.Close();//数据库连接关闭
+            BigPic(str2);
+            dSkinPictureBox11.Image = Image.FromFile(str1);
+            yuantu= Image.FromFile(str1);
+            MusicBIGPanel.BringToFront();
+            MusicBIGPanel.Show();
+            picShowIF = true;
+            picChangeIF = false;
+        }
+
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (dSkinPictureBox11.Image == null)
+                return;
+            Image rtimage = null;
+            Point point1 = new Point(yuantu.Size.Width / 2, yuantu.Size.Height / 2);
+            rtimage = DSkin.ImageEffects.RotateImage(yuantu, rotaangle, point1);
+            dSkinPictureBox11.Image = rtimage;
+            rotaangle += 1;
+            if (rotaangle == 360)
+            {
+                rotaangle = 1;
+            }
+        }
+
+
+
+        //public int radius_p = 300;
+        //public int upsize = 0;
+        //public void From_motion()
+        //{
+        //    dSkinPictureBox9.DoEffect(() =>
+        //    {
+
+        //        if (dSkinPictureBox9.Width<500)
+        //        {
+        //            upsize=(600- dSkinPictureBox9.Width)/20;
+        //            dSkinPictureBox9.Width += upsize;
+        //            dSkinPictureBox9.Height += upsize;
+        //            radius_p += upsize;
+        //            dSkinPictureBox9.DuiBackgroundRender.Radius = radius_p ;
+        //            //685, 315
+        //            dSkinPictureBox9.Left -= (upsize/2);
+        //            dSkinPictureBox9.Top -= (upsize / 2);
+        //            return true;
+        //        }
+        //        if(Width>500)
+        //        {
+        //            upsize = 0;
+        //            radius_p = 300;
+        //            dSkinPictureBox9.Size = new Size(300, 300);
+        //            dSkinPictureBox9.Location = new Point(685, 315);
+        //            return true;
+        //        }
+        //        return false;
+        //    });
+        //}
     }
 }
 

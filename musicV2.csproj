@@ -74,6 +74,9 @@
       <DependentUpon>AllMusicItemTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="BassHelper.cs" />
+    <Compile Include="CircleCornorPicutureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

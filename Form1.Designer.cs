@@ -76,6 +76,16 @@
             this.dSkinLabel13 = new DSkin.Controls.DSkinLabel();
             this.dSkinLabel12 = new DSkin.Controls.DSkinLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.MusicBIGPanel = new DSkin.Controls.DSkinPanel();
+            this.dSkinLabel25 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel24 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel23 = new DSkin.Controls.DSkinLabel();
+            this.dSkinLabel22 = new DSkin.Controls.DSkinLabel();
+            this.dSkinPictureBox11 = new DSkin.Controls.DSkinPictureBox();
+            this.dSkinPictureBox10 = new DSkin.Controls.DSkinPictureBox();
+            this.dSkinPictureBox9 = new DSkin.Controls.DSkinPictureBox();
+            this.dSkinPictureBox8 = new DSkin.Controls.DSkinPictureBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox1)).BeginInit();
             this.belowPanel.SuspendLayout();
             this.MainPanel.SuspendLayout();
@@ -87,6 +97,7 @@
             this.AllMusicPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox5)).BeginInit();
             this.dSkinPanel2.SuspendLayout();
+            this.MusicBIGPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // dSkinListBox1
@@ -311,6 +322,7 @@
             this.fugaiui.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fugaiui.TabIndex = 1;
             this.fugaiui.Text = "dSkinPictureBox1";
+            this.fugaiui.Click += new System.EventHandler(this.fugaiui_Click);
             this.fugaiui.MouseEnter += new System.EventHandler(this.fugaiui_MouseEnter);
             this.fugaiui.MouseLeave += new System.EventHandler(this.fugaiui_MouseLeave);
             // 
@@ -739,6 +751,118 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // MusicBIGPanel
+            // 
+            this.MusicBIGPanel.BackColor = System.Drawing.Color.Transparent;
+            this.MusicBIGPanel.Controls.Add(this.dSkinLabel25);
+            this.MusicBIGPanel.Controls.Add(this.dSkinLabel24);
+            this.MusicBIGPanel.Controls.Add(this.dSkinLabel23);
+            this.MusicBIGPanel.Controls.Add(this.dSkinLabel22);
+            this.MusicBIGPanel.Controls.Add(this.dSkinPictureBox11);
+            this.MusicBIGPanel.Controls.Add(this.dSkinPictureBox10);
+            this.MusicBIGPanel.Controls.Add(this.dSkinPictureBox9);
+            this.MusicBIGPanel.Controls.Add(this.dSkinPictureBox8);
+            this.MusicBIGPanel.Location = new System.Drawing.Point(250, 30);
+            this.MusicBIGPanel.Name = "MusicBIGPanel";
+            this.MusicBIGPanel.RightBottom = ((System.Drawing.Image)(resources.GetObject("MusicBIGPanel.RightBottom")));
+            this.MusicBIGPanel.Size = new System.Drawing.Size(1670, 931);
+            this.MusicBIGPanel.TabIndex = 6;
+            this.MusicBIGPanel.Text = "dSkinPanel3";
+            // 
+            // dSkinLabel25
+            // 
+            this.dSkinLabel25.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
+            this.dSkinLabel25.Location = new System.Drawing.Point(518, 689);
+            this.dSkinLabel25.Name = "dSkinLabel25";
+            this.dSkinLabel25.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel25.TabIndex = 7;
+            this.dSkinLabel25.Text = "The Ocean ";
+            // 
+            // dSkinLabel24
+            // 
+            this.dSkinLabel24.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
+            this.dSkinLabel24.Location = new System.Drawing.Point(1055, 557);
+            this.dSkinLabel24.Name = "dSkinLabel24";
+            this.dSkinLabel24.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel24.TabIndex = 6;
+            this.dSkinLabel24.Text = "The Ocean ";
+            // 
+            // dSkinLabel23
+            // 
+            this.dSkinLabel23.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
+            this.dSkinLabel23.Location = new System.Drawing.Point(1072, 265);
+            this.dSkinLabel23.Name = "dSkinLabel23";
+            this.dSkinLabel23.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel23.TabIndex = 5;
+            this.dSkinLabel23.Text = "The Ocean ";
+            // 
+            // dSkinLabel22
+            // 
+            this.dSkinLabel22.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
+            this.dSkinLabel22.Location = new System.Drawing.Point(401, 294);
+            this.dSkinLabel22.Name = "dSkinLabel22";
+            this.dSkinLabel22.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel22.TabIndex = 4;
+            this.dSkinLabel22.Text = "The Ocean ";
+            // 
+            // dSkinPictureBox11
+            // 
+            this.dSkinPictureBox11.DuiBackgroundRender.Radius = 300;
+            this.dSkinPictureBox11.DuiBackgroundRender.RenderBorders = true;
+            this.dSkinPictureBox11.Image = null;
+            this.dSkinPictureBox11.Images = null;
+            this.dSkinPictureBox11.Location = new System.Drawing.Point(685, 315);
+            this.dSkinPictureBox11.Name = "dSkinPictureBox11";
+            this.dSkinPictureBox11.Size = new System.Drawing.Size(300, 300);
+            this.dSkinPictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dSkinPictureBox11.TabIndex = 3;
+            this.dSkinPictureBox11.Text = "dSkinPictureBox11";
+            // 
+            // dSkinPictureBox10
+            // 
+            this.dSkinPictureBox10.DuiBackgroundRender.BorderColor = System.Drawing.Color.Transparent;
+            this.dSkinPictureBox10.DuiBackgroundRender.Radius = 350;
+            this.dSkinPictureBox10.DuiBackgroundRender.RenderBorders = true;
+            this.dSkinPictureBox10.Image = null;
+            this.dSkinPictureBox10.Images = null;
+            this.dSkinPictureBox10.Location = new System.Drawing.Point(660, 290);
+            this.dSkinPictureBox10.Name = "dSkinPictureBox10";
+            this.dSkinPictureBox10.Size = new System.Drawing.Size(350, 350);
+            this.dSkinPictureBox10.TabIndex = 2;
+            this.dSkinPictureBox10.Text = "dSkinPictureBox10";
+            // 
+            // dSkinPictureBox9
+            // 
+            this.dSkinPictureBox9.DuiBackgroundRender.BorderColor = System.Drawing.Color.Transparent;
+            this.dSkinPictureBox9.DuiBackgroundRender.Radius = 400;
+            this.dSkinPictureBox9.DuiBackgroundRender.RenderBorders = true;
+            this.dSkinPictureBox9.Image = null;
+            this.dSkinPictureBox9.Images = new System.Drawing.Image[] {
+        null};
+            this.dSkinPictureBox9.Location = new System.Drawing.Point(635, 265);
+            this.dSkinPictureBox9.Name = "dSkinPictureBox9";
+            this.dSkinPictureBox9.Size = new System.Drawing.Size(400, 400);
+            this.dSkinPictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.dSkinPictureBox9.TabIndex = 1;
+            this.dSkinPictureBox9.Text = "dSkinPictureBox9";
+            // 
+            // dSkinPictureBox8
+            // 
+            this.dSkinPictureBox8.DuiBackgroundRender.BorderColor = System.Drawing.Color.Transparent;
+            this.dSkinPictureBox8.DuiBackgroundRender.BorderWidth = 0;
+            this.dSkinPictureBox8.Image = null;
+            this.dSkinPictureBox8.Images = null;
+            this.dSkinPictureBox8.Location = new System.Drawing.Point(0, 0);
+            this.dSkinPictureBox8.Name = "dSkinPictureBox8";
+            this.dSkinPictureBox8.Size = new System.Drawing.Size(1670, 931);
+            this.dSkinPictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dSkinPictureBox8.TabIndex = 0;
+            this.dSkinPictureBox8.Text = "dSkinPictureBox8";
+            // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -751,6 +875,7 @@
             this.CaptionOffset = new System.Drawing.Point(10, 0);
             this.CaptionShowMode = DSkin.TextShowModes.Ordinary;
             this.ClientSize = new System.Drawing.Size(1920, 1041);
+            this.Controls.Add(this.MusicBIGPanel);
             this.Controls.Add(this.PlayListPanel);
             this.Controls.Add(this.AllMusicPanel);
             this.Controls.Add(this.MainPanel);
@@ -780,6 +905,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dSkinListBox5)).EndInit();
             this.dSkinPanel2.ResumeLayout(false);
             this.dSkinPanel2.PerformLayout();
+            this.MusicBIGPanel.ResumeLayout(false);
+            this.MusicBIGPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -832,6 +959,16 @@
         private DSkin.Controls.DSkinLabel dSkinLabel18;
         private DSkin.Controls.DSkinLabel dSkinLabel17;
         private System.Windows.Forms.Timer timer1;
+        private DSkin.Controls.DSkinPanel MusicBIGPanel;
+        private DSkin.Controls.DSkinPictureBox dSkinPictureBox8;
+        private DSkin.Controls.DSkinPictureBox dSkinPictureBox9;
+        private DSkin.Controls.DSkinPictureBox dSkinPictureBox11;
+        private DSkin.Controls.DSkinPictureBox dSkinPictureBox10;
+        private DSkin.Controls.DSkinLabel dSkinLabel25;
+        private DSkin.Controls.DSkinLabel dSkinLabel24;
+        private DSkin.Controls.DSkinLabel dSkinLabel23;
+        private DSkin.Controls.DSkinLabel dSkinLabel22;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 
