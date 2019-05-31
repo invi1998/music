@@ -375,6 +375,7 @@
             this.dSkinListBox3.Value = 0D;
             this.dSkinListBox3.ItemSelectedChanged += new System.EventHandler<DSkin.DirectUI.DuiControlEventArgs>(this.dSkinListBox3_ItemSelectedChanged);
             this.dSkinListBox3.ItemClick += new System.EventHandler<DSkin.Controls.ItemClickEventArgs>(this.dSkinListBox3_ItemClick);
+            this.dSkinListBox3.DoubleClick += new System.EventHandler(this.dSkinListBox3_DoubleClick);
             // 
             // dSkinLabel21
             // 
@@ -403,6 +404,7 @@
             this.dSkinListBox2.Location = new System.Drawing.Point(144, 294);
             this.dSkinListBox2.Name = "dSkinListBox2";
             this.dSkinListBox2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.dSkinListBox2.RollSize = 100;
             this.dSkinListBox2.ScrollBarWidth = 12;
             this.dSkinListBox2.SelectionMode = DSkin.Controls.SelectionModes.Radio;
             this.dSkinListBox2.Size = new System.Drawing.Size(1400, 270);
@@ -411,6 +413,7 @@
             this.dSkinListBox2.Value = 0D;
             this.dSkinListBox2.ItemSelectedChanged += new System.EventHandler<DSkin.DirectUI.DuiControlEventArgs>(this.DSkinListBox2_ItemSelectedChanged);
             this.dSkinListBox2.ItemClick += new System.EventHandler<DSkin.Controls.ItemClickEventArgs>(this.dSkinListBox2_ItemClick);
+            this.dSkinListBox2.DoubleClick += new System.EventHandler(this.dSkinListBox2_DoubleClick);
             // 
             // dSkinLabel8
             // 
@@ -509,7 +512,7 @@
             this.dSkinPictureBox4.Size = new System.Drawing.Size(1670, 931);
             this.dSkinPictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.dSkinPictureBox4.TabIndex = 0;
-            this.dSkinPictureBox4.Text = "dSkinPictureBox4";
+            this.dSkinPictureBox4.Text = " ";
             // 
             // PlayListPanel
             // 
@@ -543,6 +546,7 @@
             this.dSkinListBox4.BackColor = System.Drawing.Color.Transparent;
             this.dSkinListBox4.Location = new System.Drawing.Point(0, 71);
             this.dSkinListBox4.Name = "dSkinListBox4";
+            this.dSkinListBox4.RollSize = 100;
             this.dSkinListBox4.ScrollBarWidth = 12;
             this.dSkinListBox4.SelectionMode = DSkin.Controls.SelectionModes.Radio;
             this.dSkinListBox4.Size = new System.Drawing.Size(500, 860);
@@ -600,6 +604,7 @@
             this.dSkinListBox5.BackColor = System.Drawing.Color.Transparent;
             this.dSkinListBox5.Location = new System.Drawing.Point(0, 101);
             this.dSkinListBox5.Name = "dSkinListBox5";
+            this.dSkinListBox5.RollSize = 100;
             this.dSkinListBox5.ScrollBarWidth = 12;
             this.dSkinListBox5.SelectionMode = DSkin.Controls.SelectionModes.Radio;
             this.dSkinListBox5.Size = new System.Drawing.Size(1670, 830);
@@ -771,39 +776,51 @@
             // 
             // dSkinLabel25
             // 
+            this.dSkinLabel25.AutoEllipsis = true;
+            this.dSkinLabel25.AutoSize = false;
             this.dSkinLabel25.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
-            this.dSkinLabel25.Location = new System.Drawing.Point(518, 689);
+            this.dSkinLabel25.Location = new System.Drawing.Point(457, 696);
             this.dSkinLabel25.Name = "dSkinLabel25";
-            this.dSkinLabel25.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel25.Size = new System.Drawing.Size(300, 30);
             this.dSkinLabel25.TabIndex = 7;
             this.dSkinLabel25.Text = "The Ocean ";
+            this.dSkinLabel25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dSkinLabel24
             // 
+            this.dSkinLabel24.AutoEllipsis = true;
+            this.dSkinLabel24.AutoSize = false;
             this.dSkinLabel24.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
-            this.dSkinLabel24.Location = new System.Drawing.Point(1055, 557);
+            this.dSkinLabel24.Location = new System.Drawing.Point(1066, 634);
             this.dSkinLabel24.Name = "dSkinLabel24";
-            this.dSkinLabel24.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel24.Size = new System.Drawing.Size(300, 30);
             this.dSkinLabel24.TabIndex = 6;
-            this.dSkinLabel24.Text = "The Ocean ";
+            this.dSkinLabel24.Text = "海洋";
+            this.dSkinLabel24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dSkinLabel23
             // 
+            this.dSkinLabel23.AutoEllipsis = true;
+            this.dSkinLabel23.AutoSize = false;
             this.dSkinLabel23.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
-            this.dSkinLabel23.Location = new System.Drawing.Point(1072, 265);
+            this.dSkinLabel23.Location = new System.Drawing.Point(982, 211);
             this.dSkinLabel23.Name = "dSkinLabel23";
-            this.dSkinLabel23.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel23.Size = new System.Drawing.Size(340, 30);
             this.dSkinLabel23.TabIndex = 5;
             this.dSkinLabel23.Text = "The Ocean ";
+            this.dSkinLabel23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dSkinLabel22
             // 
+            this.dSkinLabel22.AutoEllipsis = true;
+            this.dSkinLabel22.AutoSize = false;
             this.dSkinLabel22.Font = new System.Drawing.Font("锐字逼格青春体简2.0", 18F);
-            this.dSkinLabel22.Location = new System.Drawing.Point(401, 294);
+            this.dSkinLabel22.Location = new System.Drawing.Point(282, 294);
             this.dSkinLabel22.Name = "dSkinLabel22";
-            this.dSkinLabel22.Size = new System.Drawing.Size(187, 36);
+            this.dSkinLabel22.Size = new System.Drawing.Size(300, 30);
             this.dSkinLabel22.TabIndex = 4;
             this.dSkinLabel22.Text = "The Ocean ";
+            this.dSkinLabel22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dSkinPictureBox11
             // 
@@ -817,6 +834,8 @@
             this.dSkinPictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.dSkinPictureBox11.TabIndex = 3;
             this.dSkinPictureBox11.Text = "dSkinPictureBox11";
+            this.dSkinPictureBox11.MouseEnter += new System.EventHandler(this.dSkinPictureBox11_MouseEnter);
+            this.dSkinPictureBox11.MouseLeave += new System.EventHandler(this.dSkinPictureBox11_MouseLeave);
             // 
             // dSkinPictureBox10
             // 
@@ -875,12 +894,12 @@
             this.CaptionOffset = new System.Drawing.Point(10, 0);
             this.CaptionShowMode = DSkin.TextShowModes.Ordinary;
             this.ClientSize = new System.Drawing.Size(1920, 1041);
-            this.Controls.Add(this.MusicBIGPanel);
             this.Controls.Add(this.PlayListPanel);
-            this.Controls.Add(this.AllMusicPanel);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.belowPanel);
             this.Controls.Add(this.dSkinListBox1);
+            this.Controls.Add(this.MusicBIGPanel);
+            this.Controls.Add(this.AllMusicPanel);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.HaloColor = System.Drawing.Color.Transparent;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -906,7 +925,6 @@
             this.dSkinPanel2.ResumeLayout(false);
             this.dSkinPanel2.PerformLayout();
             this.MusicBIGPanel.ResumeLayout(false);
-            this.MusicBIGPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }

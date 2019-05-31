@@ -26,7 +26,7 @@ namespace musicV2
         {
             if (Text != null)
             {
-                
+                Buffer_str.Clear();
                 string[] sArray = Text.Split('&');
                 foreach (string i in sArray)
                 {

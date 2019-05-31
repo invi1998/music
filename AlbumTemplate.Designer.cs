@@ -37,6 +37,8 @@
             // duiPictureBox1
             // 
             this.duiPictureBox1.AutoSize = false;
+            this.duiPictureBox1.BackgroundRender.Radius = 50;
+            this.duiPictureBox1.BackgroundRender.RenderBorders = true;
             this.duiPictureBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.duiPictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("duiPictureBox1.Image")));
             this.duiPictureBox1.Images = new System.Drawing.Image[] {
@@ -49,6 +51,8 @@
             // duiPictureBox2
             // 
             this.duiPictureBox2.AutoSize = false;
+            this.duiPictureBox2.BackgroundRender.Radius = 50;
+            this.duiPictureBox2.BackgroundRender.RenderBorders = true;
             this.duiPictureBox2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.duiPictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("duiPictureBox2.Image")));
             this.duiPictureBox2.Images = new System.Drawing.Image[] {

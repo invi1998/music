@@ -24,4 +24,3 @@ D:\c#\musicV2\obj\Debug\musicV2.ListMusicMenuTemplate.resources
 D:\c#\musicV2\obj\Debug\musicV2.PlayListForm1.resources
 D:\c#\musicV2\obj\Debug\musicV2.AllMusicItemTemplate.resources
 D:\c#\musicV2\bin\Debug\Interop.Shell32.dll
-D:\c#\musicV2\obj\Debug\musicV2.csprojAssemblyReference.cache
