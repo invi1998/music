@@ -75,23 +75,23 @@ namespace musicV2
             }
         }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            if (Tag == null)
-            {
-                Tag = "../pic/paihangban0";
-            }
-            if (Text == null)
-            {
-                Text = "001";
-            }
-            path1 =   Tag.ToString() + "0.png" ;
-            path2 =   Tag.ToString() + "1.png" ;
-            duiPictureBox1.Image = Image.FromFile(path1, false);
+        //protected override void OnLoad(EventArgs e)
+        //{
+        //    base.OnLoad(e);
+        //    if (Tag == null)
+        //    {
+        //        Tag = "../pic/paihangban0";
+        //    }
+        //    if (Text == null)
+        //    {
+        //        Text = "001";
+        //    }
+        //    path1 =   Tag.ToString() + "0.png" ;
+        //    path2 =   Tag.ToString() + "1.png" ;
+        //    duiPictureBox1.Image = Image.FromFile(path1, false);
            
-            itemtext.Text = this.Text;
-        }
+        //    itemtext.Text = this.Text;
+        //}
 
         private void listitemTemplate_MouseEnter(object sender, MouseEventArgs e)
         {

@@ -114,6 +114,12 @@
       <DependentUpon>MusicalTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="MusicFile.cs" />
+    <Compile Include="MusicListenPaiHangBanTemplate.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MusicListenPaiHangBanTemplate.Designer.cs">
+      <DependentUpon>MusicListenPaiHangBanTemplate.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyPanel01.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -158,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MusicalTemplate.resx">
       <DependentUpon>MusicalTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MusicListenPaiHangBanTemplate.resx">
+      <DependentUpon>MusicListenPaiHangBanTemplate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayListForm1.resx">
       <DependentUpon>PlayListForm1.cs</DependentUpon>

@@ -54,7 +54,6 @@
             this.duiPictureBox1.Tag = "";
             this.duiPictureBox1.MouseEnter += new System.EventHandler<System.Windows.Forms.MouseEventArgs>(this.duiPictureBox1_MouseEnter);
             this.duiPictureBox1.MouseLeave += new System.EventHandler(this.duiPictureBox1_MouseLeave);
-            this.duiPictureBox1.MouseDown += new System.EventHandler<DSkin.DirectUI.DuiMouseEventArgs>(this.duiPictureBox1_MouseDown);
             // 
             // duiPictureBox2
             // 

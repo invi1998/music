@@ -37,6 +37,8 @@
             // duiPictureBox1
             // 
             this.duiPictureBox1.AutoSize = false;
+            this.duiPictureBox1.BackgroundRender.BorderColor = System.Drawing.Color.Transparent;
+            this.duiPictureBox1.BackgroundRender.BorderWidth = 0;
             this.duiPictureBox1.BackgroundRender.Radius = 50;
             this.duiPictureBox1.BackgroundRender.RenderBorders = true;
             this.duiPictureBox1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -51,6 +53,7 @@
             // duiPictureBox2
             // 
             this.duiPictureBox2.AutoSize = false;
+            this.duiPictureBox2.BackgroundRender.BorderColor = System.Drawing.Color.White;
             this.duiPictureBox2.BackgroundRender.Radius = 50;
             this.duiPictureBox2.BackgroundRender.RenderBorders = true;
             this.duiPictureBox2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));

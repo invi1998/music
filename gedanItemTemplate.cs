@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DSkin.DirectUI;
 using DSkin.Controls;
+using System.Data.SqlClient;
 
 namespace musicV2
 {
@@ -54,11 +55,6 @@ namespace musicV2
             
         }
 
-        private void duiPictureBox1_MouseDown(object sender, DuiMouseEventArgs e)
-        {
-            
-        }
-
         private void duiPictureBox2_MouseDown(object sender, DuiMouseEventArgs e)
         {
             if (Tag == null)
@@ -100,5 +96,6 @@ namespace musicV2
             }
             
         }
+    
     }
 }
